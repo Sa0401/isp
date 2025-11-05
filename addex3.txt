@@ -1,0 +1,23 @@
+import numpy as np
+import librosa
+import librosa.display
+import matplotlib.pyplot as plt
+audio_path = r"C:\Users\anu\Downloads\pure-tone.wav"
+noise_threshold = 0.5
+audio, sr = librosa.load(audio_path, sr=None)
+stft_audio = np.abs(librosa.stft(audio))
+magnitude_spectrogram = librosa.amplitude_to_db(stft_audio, ref=np.max)
+noise_mask = magnitude_spectrogram < (np.max(magnitude_spectrogram) * 
+noise_threshold)
+plt.figure(figsize=(12, 6))
+plt.subplot(1, 2, 1)
+librosa.display.specshow(magnitude_spectrogram, sr=sr, x_axis='time', y_axis='log')
+plt.colorbar(format='%+2.0f dB')
+plt.title('Magnitude Spectrogram')
+plt.subplot(1, 2, 2)
+plt.imshow(noise_mask, aspect='auto', cmap='gray_r', origin='lower')
+plt.title('Detected Noise (Thresholded Mask)')
+plt.xlabel('Time Frames')
+plt.ylabel('Frequency Bins')
+plt.tight_layout()
+plt.show()

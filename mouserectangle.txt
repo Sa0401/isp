@@ -1,0 +1,31 @@
+import cv2
+import numpy as np
+drawing = False
+ix, iy = -1, -1
+img = cv2.imread(r"C:\Users\anu\OneDrive\Pictures\flowr.webp")
+img_copy = img.copy()
+def draw_rectangle(event, x, y, flags, param):
+    global ix, iy, drawing, img_copy, img
+
+    if event == cv2.EVENT_LBUTTONDOWN:
+        drawing = True
+        ix, iy = x, y
+
+    elif event == cv2.EVENT_MOUSEMOVE:
+        if drawing:
+            img_copy = img.copy()
+            cv2.rectangle(img_copy, (ix, iy), (x, y), (0, 255, 0), 2)
+            cv2.imshow("Image", img_copy)
+
+    elif event == cv2.EVENT_LBUTTONUP:
+        drawing = False
+        cv2.rectangle(img, (ix, iy), (x, y), (0, 255, 0), 2)
+        cv2.imshow("Image", img)
+cv2.namedWindow("Image")
+cv2.setMouseCallback("Image", draw_rectangle)
+while True:
+    cv2.imshow("Image", img)
+    if cv2.waitKey(1) & 0xFF == 27: 
+        break
+
+cv2.destroyAllWindows()

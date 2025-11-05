@@ -1,0 +1,18 @@
+import cv2
+import matplotlib.pyplot as plt
+from skimage.feature import hog
+img = cv2.imread("E:\study5sem\lab\images (2).jpg")
+gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+features, hog_image = hog(gray,
+ orientations=9,
+ pixels_per_cell=(8, 8),
+ cells_per_block=(2, 2),
+ visualize=True)
+print("HOG feature vector length:", len(features))
+plt.subplot(121)
+plt.title("Original")
+plt.imshow(gray, cmap='gray')
+plt.subplot(122)
+plt.title("HOG Visualization")
+plt.imshow(hog_image, cmap='gray')
+plt.show()

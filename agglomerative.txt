@@ -1,0 +1,19 @@
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+img = cv2.imread("E:\study5sem\lab\download.jpg", 0)
+img_float = np.float32(img)
+dct = cv2.dct(img_float)
+idct = cv2.idct(dct)
+plt.figure(figsize=(15, 8))
+plt.subplot(131)
+plt.imshow(img, cmap="gray")
+plt.title("Original Image")
+plt.subplot(132)
+plt.imshow(np.log(1 + np.abs(dct)), cmap="gray")
+plt.title("DCT Spectrum")
+plt.subplot(133)
+plt.imshow(idct, cmap="gray")
+plt.title("Reconstructed Image (IDCT)")
+plt.tight_layout()
+plt.show()
